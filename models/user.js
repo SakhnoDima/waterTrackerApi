@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
+const bCrypt = require("bcrypt");
 
 const { handleMongooseError } = require("../helpers");
 const { emailRegex, gender } = require("../constant/constant");
@@ -36,6 +37,13 @@ const userSchema = new Schema(
   },
   { versionKey: false }
 );
+
+userSchema.methods.setPass = function (password) {
+  this.password = bCrypt.hashSync(password, 10);
+};
+userSchema.methods.validPassword = function (password) {
+  return bCrypt.compareSync(password, this.password);
+};
 
 // Joi validation
 
