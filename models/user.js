@@ -21,6 +21,14 @@ const userSchema = new Schema(
       required: [true, "Email is required"],
       unique: true,
     },
+    name: {
+      type: String,
+      default: null,
+    },
+    avatar: {
+      type: String,
+      default: null,
+    },
     token: {
       type: String,
       default: null,
@@ -63,9 +71,23 @@ const userJoiSchema = Joi.object({
   }),
 });
 
+const userUpdate = Joi.object({
+  password: Joi.string().min(8).max(48).messages({
+    "string.base": `Password - should be a string type!`,
+    "string.min": `Password - should have a minimum 8 symbols length!`,
+    "string.max": `Password should have a maximum 48 symbols length!`,
+  }),
+  email: Joi.string().pattern(emailRegex).messages({
+    "string.bae": `Email - should be a string type!`,
+    "string.pattern.base": `Email - invalid pattern!`,
+  }),
+  name: Joi.string(),
+  gender: Joi.string().valid(...Object.values(gender)),
+});
+
 userSchema.post("save", handleMongooseError);
 
 const User = model("user", userSchema);
-const schemas = { userJoiSchema };
+const schemas = { userJoiSchema, userUpdate };
 
 module.exports = { User, schemas };
