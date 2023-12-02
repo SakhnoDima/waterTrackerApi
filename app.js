@@ -1,6 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
+const path = require("path");
 require("dotenv").config();
 
 const authRouter = require("./routes/auth");
@@ -18,6 +19,11 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/water", waterRouters);
+
+//is google auth example
+app.use("/api/google", (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/link.html"));
+});
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

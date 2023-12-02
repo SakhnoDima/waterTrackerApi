@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { getCurrent, userUpdate, uploadAvatar } = require("../controllers/user");
+
 const { validateBody, upload } = require("../middlewares/index.js");
 const { schemas } = require("../models/user.js");
 const authenticate = require("../middlewares/isAuthenticate");

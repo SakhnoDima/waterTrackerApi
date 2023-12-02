@@ -3,6 +3,8 @@ const HttpError = require("./httpErrors");
 const controllerWrapper = require("./controllerWrapper");
 const { tokenCreator, isValidToken } = require("./tokenWorkPlace");
 const setAvatar = require("./useAvatar");
+const { stringifiedParams, getUserFromGoogle } = require("./googleAuth");
+const userCreator = require("./addedUser");
 
 module.exports = {
   handleMongooseError,
@@ -11,4 +13,7 @@ module.exports = {
   tokenCreator,
   isValidToken,
   setAvatar,
+  stringifiedParams,
+  getUserFromGoogle,
+  userCreator,
 };

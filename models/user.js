@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 const bCrypt = require("bcrypt");
 
-const { handleMongooseError } = require("../helpers");
+const handleMongooseError = require("../helpers/handleMongooseError");
 const { emailRegex, gender } = require("../constant/constant");
 
 // Mongoose schema

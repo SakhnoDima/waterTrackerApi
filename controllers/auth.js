@@ -1,5 +1,12 @@
 const { User } = require("../models/user");
-const { controllerWrapper, HttpError, tokenCreator } = require("../helpers");
+const {
+  controllerWrapper,
+  HttpError,
+  tokenCreator,
+  stringifiedParams,
+  getUserFromGoogle,
+  userCreator,
+} = require("../helpers");
 
 //? ===  register ===
 
@@ -75,8 +82,31 @@ const logOut = async (req, res) => {
   });
 };
 
+//? === Google auth ===
+
+const googleAuth = async (req, res) => {
+  return res.redirect(
+    `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`
+  );
+};
+
+//? == Google redirect ===
+
+const googleRedirect = async (req, res) => {
+  const fullUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
+  const { data } = await getUserFromGoogle(fullUrl);
+  console.log(data);
+  const token = await userCreator(data);
+
+  // return res.redirect(
+  //   `${process.env.FRONTEND_URL}?token=${token}`
+  // );
+};
+
 module.exports = {
   register: controllerWrapper(register),
   logIn: controllerWrapper(logIn),
   logOut: controllerWrapper(logOut),
+  googleAuth: controllerWrapper(googleAuth),
+  googleRedirect: controllerWrapper(googleRedirect),
 };
