@@ -57,6 +57,7 @@ const logIn = async (req, res) => {
   res.status(200).json({
     user: {
       email: userWithToken.email,
+      avatar: userWithToken.avatar,
       token: token,
     },
   });
