@@ -12,9 +12,12 @@ const httpErrors = {
   409: "Conflict!",
 };
 
+const pictureFormat = ["jpg", "jpeg", "ico", "png", "svg", "webp"];
+
 module.exports = {
   emailRegex,
   gender,
   httpErrors,
   tokenExpires,
+  pictureFormat,
 };

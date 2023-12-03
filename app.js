@@ -2,11 +2,13 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 const path = require("path");
+const swaggerUi = require("swagger-ui-express");
 require("dotenv").config();
 
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const waterRouters = require("./routes/water");
+const swaggerDocument = require("./swagger.json");
 
 const app = express();
 
@@ -19,6 +21,7 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/water", waterRouters);
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //is google auth example
 app.use("/api/google", (req, res) => {
