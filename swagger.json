@@ -1,0 +1,479 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Water Tracker Api",
+    "description": "Showing off Water Tracker Api-ui-express",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "http://localhost:5050/api" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "User",
+      "description": "User endpoints"
+    },
+    {
+      "name": "Water",
+      "description": "Water endpoints"
+    }
+  ],
+
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Register is successfully!",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Email is already in use",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Register is successfully!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogInResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Email or password is wrong",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "201": {
+            "description": "User successfully logout"
+          },
+          "401": {
+            "description": "Not authorized!",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/auth/google": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "User registration from Google Api",
+        "parameters": [],
+        "description": "This route use for google authorization and don't need any params or body. All what you should do send user to google api that give them choose google account and make verification",
+
+        "responses": {
+          "": {
+            "description": "When user got certification Google Api redirect hem to route: /google-redirect"
+          }
+        }
+      }
+    },
+    "/auth/google-redirect": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "User registration from Google Api redirect route",
+        "parameters": [],
+        "description": "If user got verification, Google send `code` on params. We use this parameter to get user info from Google and to save user in our Api",
+
+        "responses": {
+          "": {
+            "description": "Saved user get token and redirect to frontend"
+          }
+        }
+      }
+    },
+    "/user/current": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get current user with all info",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "201": {
+            "description": "Get current user data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized!",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/updateUser": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Changing user data",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Data object to update",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Update user data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "User with email: email@gmail.com already exist",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/updateAvatar": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Changing user avatar",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Avatar to update",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "paramType": "body",
+                "properties": {
+                  "file": {
+                    "type": "file",
+                    "name": "file"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AvatarResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "File format doesn't supported",
+            "content": {}
+          },
+          "409": {
+            "description": "Please add your avatar!",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/updateWaterRate": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Changing daily water rate",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "User water rate",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WaterRate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaterRate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized!",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "12345678"
+          }
+        }
+      },
+      "LogInResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "User avatar link",
+            "example": "http://res.cloudinary.com/..."
+          },
+          "token": {
+            "type": "string",
+            "description": "User token",
+            "example": "daf7f8a7fy8a7sfda7sydf"
+          }
+        },
+        "example": {
+          "email": "stich@gmail.com",
+          "avatar": "http://res.cloudinary.com/...",
+          "token": "daf7f8a7fy8a7sfda7sydf"
+        }
+      },
+      "CurrentResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "example": ""
+          },
+          "name": {
+            "type": "string",
+            "description": "User avatar name",
+            "example": "User User"
+          },
+          "gender": {
+            "type": "string",
+            "enum": ["male", "female"],
+            "description": "User gender",
+            "example": "male"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "User avatar link",
+            "example": "http://res.cloudinary.com/..."
+          },
+          "dailyNormal": {
+            "type": "number",
+            "description": "User water daily normal",
+            "example": "2"
+          },
+          "token": {
+            "type": "string",
+            "description": "User token",
+            "example": "daf7f8a7fy8a7sfda7sydf"
+          }
+        },
+        "example": {
+          "email": "stich@gmail.com",
+          "name": "Stich",
+          "gender": "male",
+          "dailyNormal": "2",
+          "avatar": "http://res.cloudinary.com/...",
+          "token": "daf7f8a7fy8a7sfda7sydf"
+        }
+      },
+      "UpdateRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "name": {
+            "type": "string",
+            "description": "User avatar name",
+            "example": "User User"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "12345678"
+          },
+          "gender": {
+            "type": "string",
+            "enum": ["male", "female"],
+            "description": "User gender",
+            "example": "male"
+          }
+        },
+        "example": {
+          "email": "stich@gmail.com",
+          "password": "12345678",
+          "name": "Stich",
+          "gender": "male"
+        }
+      },
+      "UpdateResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "name": {
+            "type": "string",
+            "description": "User avatar name",
+            "example": "User User"
+          },
+          "gender": {
+            "type": "string",
+            "enum": ["male", "female"],
+            "description": "User gender",
+            "example": "male"
+          }
+        },
+        "example": {
+          "email": "stich@gmail.com",
+          "name": "Stich",
+          "gender": "male"
+        }
+      },
+      "AvatarResponse": {
+        "type": "object",
+        "properties": {
+          "avatar": {
+            "type": "string",
+            "description": "User avatar link",
+            "example": "http://res.cloudinary.com/..."
+          }
+        },
+        "example": {
+          "avatar": "http://res.cloudinary.com/..."
+        }
+      },
+      "WaterRate": {
+        "type": "object",
+        "properties": {
+          "dailyNormal": {
+            "type": "number",
+            "description": "User daily normal water rate",
+            "example": "4000"
+          }
+        },
+        "example": {
+          "dailyNormal": "4000"
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

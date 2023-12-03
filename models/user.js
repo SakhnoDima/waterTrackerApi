@@ -39,7 +39,7 @@ const userSchema = new Schema(
       default: null,
     },
     dailyNormal: {
-      type: String,
+      type: Number,
       default: null,
     },
   },
@@ -85,9 +85,17 @@ const userUpdate = Joi.object({
   gender: Joi.string().valid(...Object.values(gender)),
 });
 
+const updateWaterRate = Joi.object({
+  dailyNormal: Joi.number().min(1).max(15000).required().messages({
+    "number.base": `DailyNormal - should be a number type!`,
+    "number.min": `DailyNormal - can be minimum 1ml!`,
+    "number.max": `DailyNormal - can be maximum 15000ml!`,
+  }),
+});
+
 userSchema.post("save", handleMongooseError);
 
 const User = model("user", userSchema);
-const schemas = { userJoiSchema, userUpdate };
+const schemas = { userJoiSchema, userUpdate, updateWaterRate };
 
 module.exports = { User, schemas };
