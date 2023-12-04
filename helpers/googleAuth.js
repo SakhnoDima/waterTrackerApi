@@ -17,7 +17,7 @@ const getUserFromGoogle = async (url) => {
   const urlObj = new URL(url);
   const urlParams = queryString.parse(urlObj.search);
   const code = Object.values(urlParams);
-
+  console.log(1111);
   const tokenData = await axios({
     url: `https://oauth2.googleapis.com/token`,
     method: "post",
@@ -29,7 +29,7 @@ const getUserFromGoogle = async (url) => {
       code: code[0],
     },
   });
-
+  console.log(code[0]);
   const userData = await axios({
     url: "https://www.googleapis.com/oauth2/v2/userinfo",
     method: "get",
