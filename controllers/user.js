@@ -78,7 +78,7 @@ const uploadAvatar = async (req, res) => {
 
 const editWaterRate = async (req, res) => {
   const { _id } = req.user;
-
+  console.log(_id);
   const newUser = await User.findByIdAndUpdate(_id, req.body, {
     new: true,
   });
