@@ -292,6 +292,133 @@
           }
         }
       }
+    },
+    "/water/": {
+      "post": {
+        "tags": ["Water"],
+        "summary": "Add information about water water rate",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Water rate data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WaterRateDataRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaterRateDataResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized!",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/water/ {waterId}": {
+      "delete": {
+        "tags": ["Water"],
+        "summary": "Remove information about water water rate",
+        "parameters": [
+          {
+            "name": "waterId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Not need body",
+          "required": false,
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Information about water has been successfully deleted!",
+            "content": {}
+          },
+          "404": {
+            "description": "`WaterId is not valid id` or `Don't have data with such id : waterId`",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized!",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/water/{waterId}": {
+      "patch": {
+        "tags": ["Water"],
+        "summary": "Update information about water water rate",
+        "parameters": [
+          {
+            "name": "waterId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Water rate data",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WaterRateDataRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaterRateDataResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized!",
+            "content": {}
+          },
+          "404": {
+            "description": "`WaterId is not valid id` or `Don't have data with such id : waterId`",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
@@ -361,7 +488,7 @@
             "description": "User avatar link",
             "example": "http://res.cloudinary.com/..."
           },
-          "dailyNormal": {
+          "dailyNorma": {
             "type": "number",
             "description": "User water daily normal",
             "example": "2"
@@ -376,7 +503,7 @@
           "email": "stich@gmail.com",
           "name": "Stich",
           "gender": "male",
-          "dailyNormal": "2",
+          "dailyNorma": "2",
           "avatar": "http://res.cloudinary.com/...",
           "token": "daf7f8a7fy8a7sfda7sydf"
         }
@@ -455,14 +582,58 @@
       "WaterRate": {
         "type": "object",
         "properties": {
-          "dailyNormal": {
+          "dailyNorma": {
             "type": "number",
             "description": "User daily normal water rate",
             "example": "4000"
           }
         },
         "example": {
-          "dailyNormal": "4000"
+          "dailyNorma": "4000"
+        }
+      },
+      "WaterRateDataRequest": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Water amount",
+            "example": "4000"
+          },
+          "time": {
+            "type": "date",
+            "description": "Water intake time",
+            "example": "2354-03-06T06:35:45.245Z"
+          }
+        },
+        "example": {
+          "amount": "4000",
+          "time": "2354-03-06T06:35:45.245Z"
+        }
+      },
+      "WaterRateDataResponse": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Water amount",
+            "example": "4000"
+          },
+          "time": {
+            "type": "date",
+            "description": "Water intake time",
+            "example": "2354-03-06T06:35:45.245Z"
+          },
+          "_id": {
+            "type": "object",
+            "description": "Id",
+            "example": "656dc860f4cebbf99c5d6520"
+          }
+        },
+        "example": {
+          "amount": "4000",
+          "time": "2354-03-06T06:35:45.245Z",
+          "_id": "656dc860f4cebbf99c5d6520"
         }
       }
     },

@@ -14,7 +14,7 @@ const getCurrent = async (req, res) => {
     token: user.token,
     name: user.name,
     gender: user.gender,
-    dailyNormal: user.dailyNormal,
+    dailyNorma: user.dailyNorma,
     avatar: user.avatar,
   });
 };
@@ -83,7 +83,7 @@ const editWaterRate = async (req, res) => {
     new: true,
   });
   res.status(200).json({
-    dailyNormal: newUser.dailyNormal,
+    dailyNorma: newUser.dailyNorma,
   });
 };
 
