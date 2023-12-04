@@ -94,6 +94,7 @@ const googleAuth = async (req, res) => {
 
 const googleRedirect = async (req, res) => {
   const fullUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
+  console.log(fullUrl);
   const { data } = await getUserFromGoogle(fullUrl);
 
   const token = await userCreator(data);
