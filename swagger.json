@@ -11,7 +11,7 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:5050/api" }],
+  "servers": [{ "url": "https://water-tracker-f07j.onrender.com/api" }],
   "tags": [
     {
       "name": "Auth",
