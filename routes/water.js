@@ -9,6 +9,8 @@ const {
   setWaterData,
   updateWater,
   removeWaterInfo,
+  getWaterToday,
+  getWaterPerMonth,
 } = require("../controllers/water.js");
 
 router.use(authenticate);
@@ -20,6 +22,12 @@ router.patch(
   isValidId,
   validateBody(schemas.updateWaterJoiSchema),
   updateWater
+);
+router.get("/today", getWaterToday);
+router.patch(
+  "/month/info",
+  validateBody(schemas.getWaterInfoMonthJoiSchema),
+  getWaterPerMonth
 );
 
 module.exports = router;

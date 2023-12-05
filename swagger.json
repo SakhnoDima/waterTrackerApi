@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "title": "Water Tracker Api",
     "description": "Showing off Water Tracker Api-ui-express",
     "license": {
@@ -419,6 +419,78 @@
           }
         }
       }
+    },
+    "/water/today": {
+      "get": {
+        "tags": ["Water"],
+        "summary": "Get a list of daily water data and the percentage of water you drink.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Water rate data",
+          "required": false,
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaterPercentWithDailyListDataResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized!",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/water/month/info": {
+      "patch": {
+        "tags": ["Water"],
+        "summary": "Get a list of daily water data for a given month.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Date",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WaterDateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaterDateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized!",
+            "content": {}
+          },
+          "404": {
+            "description": "Date is note correct!",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
@@ -603,12 +675,12 @@
           "time": {
             "type": "date",
             "description": "Water intake time",
-            "example": "2354-03-06T06:35:45.245Z"
+            "example": "2023-12-05T09:17:49.355+00:00"
           }
         },
         "example": {
           "amount": "4000",
-          "time": "2354-03-06T06:35:45.245Z"
+          "time": "2023-12-05T09:17:49.355+00:00"
         }
       },
       "WaterRateDataResponse": {
@@ -634,6 +706,92 @@
           "amount": "4000",
           "time": "2354-03-06T06:35:45.245Z",
           "_id": "656dc860f4cebbf99c5d6520"
+        }
+      },
+      "WaterPercentWithDailyListDataResponse": {
+        "type": "object",
+        "properties": {
+          "percent": {
+            "type": "number",
+            "description": "Percent of drink water",
+            "example": "4000"
+          },
+          "dailyWaterList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WaterRateDataResponse"
+            }
+          }
+        },
+        "example": {
+          "percent": "40",
+          "dailyWaterList": [
+            {
+              "amount": "4000",
+              "time": "2354-03-06T06:35:45.245Z",
+              "_id": "656dc860f4cebbf99c5d6520"
+            }
+          ]
+        }
+      },
+      "WaterDateRequest": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "date",
+            "description": "Date",
+            "example": "2023-12-03T12:39:08.018+00:00"
+          }
+        },
+        "example": {
+          "date": "2023-12-03T12:39:08.018+00:00"
+        }
+      },
+      "WaterDateResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "object",
+              "properties": {
+                "day": {
+                  "type": "number",
+                  "description": "Day value",
+                  "example": "5"
+                },
+                "month": {
+                  "type": "number",
+                  "description": "Month value",
+                  "example": "12"
+                }
+              }
+            },
+            "dailyNorma": {
+              "type": "number",
+              "description": "Water daily norma",
+              "example": "10000"
+            },
+            "percent": {
+              "type": "number",
+              "description": "The percent from dailyWater",
+              "example": "45"
+            },
+            "quantity": {
+              "type": "number",
+              "description": "Total number of water intakes per day",
+              "example": "45"
+            }
+          }
+        },
+        "example": {
+          "date": {
+            "day": 1,
+            "month": 12
+          },
+          "dailyNorma": 10000,
+          "percent": 0,
+          "quantity": 0
         }
       }
     },
