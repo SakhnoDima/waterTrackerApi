@@ -15,6 +15,18 @@ const waterSchema = new Schema({
     type: Date,
     required: [true, "Time is required"],
   },
+  day: {
+    type: Number,
+    default: null,
+  },
+  month: {
+    type: Number,
+    default: null,
+  },
+  year: {
+    type: Number,
+    default: null,
+  },
   owner: {
     type: Schema.Types.ObjectId,
     ref: "user",

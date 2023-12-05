@@ -1,13 +1,32 @@
-const { controllerWrapper, HttpError } = require("../helpers");
+const {
+  controllerWrapper,
+  HttpError,
+  getDateInfo,
+  getWaterUsePercent,
+  totalWaterPerToday,
+} = require("../helpers");
+
+const { User } = require("../models/user");
 const { Water } = require("../models/water");
 
 //? ===  Add Info About Water Rate ===
 
 const setWaterData = async (req, res) => {
   const { _id: owner } = req.user;
-  const { amount, time } = req.body; //! подумать как фильтровать!?!?
+  const { amount, time } = req.body;
 
-  const result = await Water.create({ amount, time, owner });
+  // Getting full details from user data (time)
+
+  const { day, month, year } = getDateInfo(time);
+
+  const result = await Water.create({
+    amount,
+    time,
+    day,
+    month,
+    year,
+    owner,
+  });
 
   res.status(201).json({
     _id: result._id,
@@ -63,8 +82,43 @@ const removeWaterInfo = async (req, res) => {
   });
 };
 
+const getWaterToday = async (req, res) => {
+  const { _id: owner } = req.user;
+  const { dailyNorma } = await User.findById(owner);
+
+  //! if (!dailyNorma) {
+  //!   throw HttpError(404, `Please add your daily water rate`);
+  //! }
+
+  // Getting full details from user data (time)
+  const { day, month, year } = getDateInfo(Date.now());
+
+  // Filter the entire list by today's date
+  const dailyWaterList = await Water.find(
+    {
+      owner,
+      day,
+      month,
+      year,
+    },
+    "amount time"
+  ).exec();
+
+  // Get the total amount of drink water for today's date
+  const total = await totalWaterPerToday(dailyWaterList);
+
+  // Get the percent from dailyWater
+  const percent = getWaterUsePercent(total, dailyNorma);
+
+  res.status(201).json({
+    percent,
+    dailyWaterList,
+  });
+};
+
 module.exports = {
   setWaterData: controllerWrapper(setWaterData),
   updateWater: controllerWrapper(updateWater),
   removeWaterInfo: controllerWrapper(removeWaterInfo),
+  getWaterToday: controllerWrapper(getWaterToday),
 };

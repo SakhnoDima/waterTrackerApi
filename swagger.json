@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "title": "Water Tracker Api",
     "description": "Showing off Water Tracker Api-ui-express",
     "license": {
@@ -11,7 +11,7 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "https://water-tracker-f07j.onrender.com/api" }],
+  "servers": [{ "url": "http://localhost:5050/api" }],
   "tags": [
     {
       "name": "Auth",
@@ -419,6 +419,35 @@
           }
         }
       }
+    },
+    "/water/today": {
+      "get": {
+        "tags": ["Water"],
+        "summary": "Get a list of daily water data and the percentage of water you drink.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Water rate data",
+          "required": false,
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaterPercentWithDailyListDataResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized!",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
@@ -603,12 +632,12 @@
           "time": {
             "type": "date",
             "description": "Water intake time",
-            "example": "2354-03-06T06:35:45.245Z"
+            "example": "2023-12-05T09:17:49.355+00:00"
           }
         },
         "example": {
           "amount": "4000",
-          "time": "2354-03-06T06:35:45.245Z"
+          "time": "2023-12-05T09:17:49.355+00:00"
         }
       },
       "WaterRateDataResponse": {
@@ -634,6 +663,32 @@
           "amount": "4000",
           "time": "2354-03-06T06:35:45.245Z",
           "_id": "656dc860f4cebbf99c5d6520"
+        }
+      },
+      "WaterPercentWithDailyListDataResponse": {
+        "type": "object",
+        "properties": {
+          "percent": {
+            "type": "number",
+            "description": "Percent of drink water",
+            "example": "4000"
+          },
+          "dailyWaterList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WaterRateDataResponse"
+            }
+          }
+        },
+        "example": {
+          "percent": "40",
+          "dailyWaterList": [
+            {
+              "amount": "4000",
+              "time": "2354-03-06T06:35:45.245Z",
+              "_id": "656dc860f4cebbf99c5d6520"
+            }
+          ]
         }
       }
     },

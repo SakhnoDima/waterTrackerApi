@@ -5,6 +5,9 @@ const { tokenCreator, isValidToken } = require("./tokenWorkPlace");
 const setAvatar = require("./useAvatar");
 const { stringifiedParams, getUserFromGoogle } = require("./googleAuth");
 const userCreator = require("./addedUser");
+const totalWaterPerToday = require("./totalWaterPerToday");
+const getWaterUsePercent = require("./getWaterUsePercent");
+const getDateInfo = require("./getDateInfo");
 
 module.exports = {
   handleMongooseError,
@@ -16,4 +19,7 @@ module.exports = {
   stringifiedParams,
   getUserFromGoogle,
   userCreator,
+  totalWaterPerToday,
+  getWaterUsePercent,
+  getDateInfo,
 };
