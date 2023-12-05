@@ -4,6 +4,8 @@ const {
   getDateInfo,
   getWaterUsePercent,
   totalWaterPerToday,
+  numDays,
+  getMonthList,
 } = require("../helpers");
 
 const { User } = require("../models/user");
@@ -116,9 +118,20 @@ const getWaterToday = async (req, res) => {
   });
 };
 
+const getWaterPerMonth = async (req, res) => {
+  const { _id: owner } = req.user;
+  const { dailyNorma } = await User.findById(owner);
+  const { date } = req.body;
+
+  const rez = await getMonthList(date, dailyNorma, owner);
+
+  res.status(201).json([...rez]);
+};
+
 module.exports = {
   setWaterData: controllerWrapper(setWaterData),
   updateWater: controllerWrapper(updateWater),
   removeWaterInfo: controllerWrapper(removeWaterInfo),
   getWaterToday: controllerWrapper(getWaterToday),
+  getWaterPerMonth: controllerWrapper(getWaterPerMonth),
 };

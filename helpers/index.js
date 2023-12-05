@@ -8,6 +8,8 @@ const userCreator = require("./addedUser");
 const totalWaterPerToday = require("./totalWaterPerToday");
 const getWaterUsePercent = require("./getWaterUsePercent");
 const getDateInfo = require("./getDateInfo");
+const numDays = require("./getAllDaysOfMonth");
+const getMonthList = require("./getMonthList");
 
 module.exports = {
   handleMongooseError,
@@ -22,4 +24,6 @@ module.exports = {
   totalWaterPerToday,
   getWaterUsePercent,
   getDateInfo,
+  numDays,
+  getMonthList,
 };

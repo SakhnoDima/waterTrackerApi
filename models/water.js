@@ -61,10 +61,21 @@ const updateWaterJoiSchema = Joi.object({
     "time.empty": `Time - cannot be an empty!`,
   }),
 });
+const getWaterInfoMonthJoiSchema = Joi.object({
+  date: Joi.date().required().messages({
+    "time.bae": `Date - should be a date type!`,
+    "time.empty": `Date - cannot be an empty!`,
+    "any.required": `Date is a required!`,
+  }),
+});
 
 waterSchema.post("save", handleMongooseError);
 
 const Water = model("water", waterSchema);
-const schemas = { waterJoiSchema, updateWaterJoiSchema };
+const schemas = {
+  waterJoiSchema,
+  updateWaterJoiSchema,
+  getWaterInfoMonthJoiSchema,
+};
 
 module.exports = { Water, schemas };
