@@ -23,7 +23,7 @@ const getCurrent = async (req, res) => {
 
 const userUpdate = async (req, res) => {
   const { _id, email } = req.user;
-  const { email: newEmail, password } = req.body;
+  const { email: newEmail, passwordOld, passwordNew } = req.body;
 
   // is user with new email exist in base
 
@@ -39,8 +39,15 @@ const userUpdate = async (req, res) => {
   const newUser = await User.findByIdAndUpdate(_id, req.body, {
     new: true,
   });
-  if (password) {
-    newUser.setPass(password);
+
+  // update password
+  if (passwordOld && passwordNew) {
+    const validPass = newUser.validPassword(passwordOld);
+
+    if (!validPass) {
+      throw HttpError(409, `The entered password is incorrect!`);
+    }
+    newUser.setPass(passwordNew);
     await newUser.save();
   }
 

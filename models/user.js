@@ -71,7 +71,12 @@ const userJoiSchema = Joi.object({
 });
 
 const userUpdate = Joi.object({
-  password: Joi.string().min(8).max(48).messages({
+  passwordOld: Joi.string().min(8).max(48).messages({
+    "string.base": `Password - should be a string type!`,
+    "string.min": `Password - should have a minimum 8 symbols length!`,
+    "string.max": `Password should have a maximum 48 symbols length!`,
+  }),
+  passwordNew: Joi.string().min(8).max(48).messages({
     "string.base": `Password - should be a string type!`,
     "string.min": `Password - should have a minimum 8 symbols length!`,
     "string.max": `Password should have a maximum 48 symbols length!`,
