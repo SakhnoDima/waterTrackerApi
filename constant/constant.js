@@ -14,10 +14,13 @@ const httpErrors = {
 
 const pictureFormat = ["jpg", "jpeg", "ico", "png", "svg", "webp"];
 
+const LIFETIME = 1000 * 60 * 60 * 24;
+
 module.exports = {
   emailRegex,
   gender,
   httpErrors,
   tokenExpires,
   pictureFormat,
+  LIFETIME,
 };

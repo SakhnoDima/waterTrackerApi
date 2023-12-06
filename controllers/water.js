@@ -4,7 +4,6 @@ const {
   getDateInfo,
   getWaterUsePercent,
   totalWaterPerToday,
-  numDays,
   getMonthList,
 } = require("../helpers");
 

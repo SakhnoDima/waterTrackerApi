@@ -1,4 +1,8 @@
 const express = require("express");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const MongoStore = require("connect-mongo");
+const uuidv4 = require("uuid").v4;
 const logger = require("morgan");
 const cors = require("cors");
 const path = require("path");
@@ -9,7 +13,8 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const waterRouters = require("./routes/water");
 const swaggerDocument = require("./swagger.json");
-
+const { LIFETIME } = require("./constant/constant");
+const secret = uuidv4();
 const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
@@ -17,6 +22,23 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
+
+app.use(cookieParser(secret));
+app.use(
+  session({
+    secret: secret,
+    resave: false,
+    saveUninitialized: false,
+    name: process.env.SESSION_NAME || "waterTracker",
+    store: new MongoStore({
+      mongoUrl: process.env.DB_HOST,
+      ttl: LIFETIME,
+    }),
+    cookie: {
+      maxAge: LIFETIME,
+    },
+  })
+);
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
