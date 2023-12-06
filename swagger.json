@@ -204,6 +204,10 @@
           "401": {
             "description": "User with email: email@gmail.com already exist",
             "content": {}
+          },
+          "409": {
+            "description": "The entered password is incorrect!",
+            "content": {}
           }
         }
       }
@@ -593,7 +597,12 @@
             "description": "User avatar name",
             "example": "User User"
           },
-          "password": {
+          "passwordNew": {
+            "type": "string",
+            "description": "User's password",
+            "example": "12345678"
+          },
+          "passwordOld": {
             "type": "string",
             "description": "User's password",
             "example": "12345678"
@@ -607,7 +616,8 @@
         },
         "example": {
           "email": "stich@gmail.com",
-          "password": "12345678",
+          "passwordOld": "12345678",
+          "passwordNew": "987654321",
           "name": "Stich",
           "gender": "male"
         }
