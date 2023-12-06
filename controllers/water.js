@@ -84,6 +84,7 @@ const removeWaterInfo = async (req, res) => {
   });
 };
 
+//? ===  Get daily info  ===
 const getWaterToday = async (req, res) => {
   const { _id: owner } = req.user;
   const { dailyNorma } = await User.findById(owner);
@@ -118,6 +119,7 @@ const getWaterToday = async (req, res) => {
   });
 };
 
+//? ===  Get monthly info  ===
 const getWaterPerMonth = async (req, res) => {
   const { _id: owner } = req.user;
   const { dailyNorma } = await User.findById(owner);

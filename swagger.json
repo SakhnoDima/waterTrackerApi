@@ -450,7 +450,7 @@
       }
     },
     "/water/month/info": {
-      "patch": {
+      "post": {
         "tags": ["Water"],
         "summary": "Get a list of daily water data for a given month.",
         "parameters": [],
