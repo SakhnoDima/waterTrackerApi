@@ -39,6 +39,7 @@ const setWaterData = async (req, res) => {
 //? ===  Update Info About Water Rate ===
 
 const updateWater = async (req, res) => {
+  const { _id } = req.user;
   const { waterId } = req.params;
   const { amount, time } = req.body;
 
@@ -58,6 +59,9 @@ const updateWater = async (req, res) => {
       new: true,
     }
   );
+  // console.log(_id.toString());
+  // console.log(result.owner.toString());
+  //  console.log(result.owner.toString() === _id.toString());
   if (!result) {
     throw HttpError(404, `Don't have data with such id : ${waterId}!`);
   }

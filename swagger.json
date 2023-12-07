@@ -398,7 +398,7 @@
             "content": {}
           },
           "404": {
-            "description": "`WaterId is not valid id` or `Don't have data with such id : waterId`",
+            "description": "`WaterId is not valid id` or `This water feature does not belong to the current user!` or `Don't have data with such id : waterId`",
             "content": {}
           },
           "401": {
@@ -454,7 +454,7 @@
             "content": {}
           },
           "404": {
-            "description": "`WaterId is not valid id` or `Don't have data with such id : waterId`",
+            "description": "`WaterId is not valid id` or `This water feature does not belong to the current user!` or `Don't have data with such id : waterId`",
             "content": {}
           }
         }
