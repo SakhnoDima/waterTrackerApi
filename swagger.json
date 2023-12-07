@@ -244,6 +244,45 @@
           "409": {
             "description": "The entered password is incorrect!",
             "content": {}
+          },
+          "500": {
+            "description": "There are problems on the server, try again later.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/updateUser/{email}/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Verify user email",
+        "parameters": [
+          {
+            "name": "email",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {}
+        },
+        "responses": {
+          "201": {
+            "description": "Should redirect to front on home page",
+            "content": {}
           }
         }
       }
@@ -692,6 +731,7 @@
           }
         },
         "example": {
+          "message": "`Visit ${newEmail} to confirm new email` or `null` if email doesn't change",
           "email": "stich@gmail.com",
           "name": "Stich",
           "gender": "male"
