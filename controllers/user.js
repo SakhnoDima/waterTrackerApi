@@ -1,7 +1,12 @@
 const path = require("path");
 
 const { User } = require("../models/user");
-const { controllerWrapper, HttpError, setAvatar } = require("../helpers");
+const {
+  controllerWrapper,
+  HttpError,
+  setAvatar,
+  mailSenderTransport,
+} = require("../helpers");
 const { pictureFormat } = require("../constant/constant");
 
 //? ===  CurrentUser ===
@@ -34,11 +39,32 @@ const userUpdate = async (req, res) => {
     }
   }
 
+  if (newEmail) {
+    // Sending an email to a user to confirm email
+    const emailChange = {
+      to: email,
+      subject: "New email",
+      text: "Updated email",
+      html: `<div><h1>Water Tracker</h1>
+    <a href="http://localhost:5050/api/user/updateUser/${newEmail}/${_id}">Updated email : ${newEmail}</a>
+    </div>`,
+    };
+
+    await mailSenderTransport(emailChange);
+  }
+
   // update user
 
-  const newUser = await User.findByIdAndUpdate(_id, req.body, {
-    new: true,
-  });
+  const newUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name: req.body.name,
+      gender: req.body.gender,
+    },
+    {
+      new: true,
+    }
+  );
 
   // update password
   if (passwordOld && passwordNew) {
@@ -52,10 +78,27 @@ const userUpdate = async (req, res) => {
   }
 
   res.status(200).json({
+    message: newEmail ? `Visit ${newEmail} to confirm new email` : null,
     name: newUser.name,
     email: newUser.email,
     gender: newUser.gender,
   });
+};
+
+//? ===  Verify email  ===
+
+const verifyEmail = async (req, res) => {
+  const { email, id } = req.params;
+
+  await User.findOneAndUpdate(
+    { _id: id },
+    { email },
+    {
+      new: true,
+    }
+  );
+
+  return res.redirect(`${process.env.FRONTEND_URL}/water-tracker/`);
 };
 
 //? ===  Upload User Avatar ===
@@ -99,4 +142,5 @@ module.exports = {
   userUpdate: controllerWrapper(userUpdate),
   uploadAvatar: controllerWrapper(uploadAvatar),
   editWaterRate: controllerWrapper(editWaterRate),
+  verifyEmail: controllerWrapper(verifyEmail),
 };
