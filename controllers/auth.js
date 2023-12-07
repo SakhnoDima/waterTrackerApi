@@ -6,6 +6,8 @@ const {
   stringifiedParams,
   getUserFromGoogle,
   userCreator,
+  mailSenderTransport,
+  passwordGenerator,
 } = require("../helpers");
 
 //? ===  register ===
@@ -108,9 +110,47 @@ const googleRedirect = async (req, res) => {
 
   const token = await userCreator(data);
 
-  // return res.redirect(
-  //   `${process.env.FRONTEND_URL}?token=${token}`
-  // );
+  return res.redirect(
+    `${process.env.FRONTEND_URL}/water-tracker/?token=${token}`
+  );
+};
+
+//? == Forgot password / mailSender ===
+
+const mailSender = async (req, res) => {
+  const { email } = req.body;
+
+  // Is user exist
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw HttpError(404, `User with email: ${email} not found`);
+  }
+
+  // Generate random password
+  const newPass = await passwordGenerator();
+
+  // Hashing password
+  user.setPass(newPass);
+
+  // Saving user in base
+  await user.save();
+
+  // Sending an email to a user with a new password
+  const verifyEmail = {
+    to: email,
+    subject: "New password",
+    text: "Updated password",
+    html: `<div><h1>Water Tracker</h1>
+    <p>Updated password : ${newPass}</p>
+    </div>`,
+  };
+
+  await mailSenderTransport(verifyEmail);
+
+  res.status(200).json({
+    message: "New password sent successfully!",
+  });
 };
 
 module.exports = {
@@ -119,4 +159,5 @@ module.exports = {
   logOut: controllerWrapper(logOut),
   googleAuth: controllerWrapper(googleAuth),
   googleRedirect: controllerWrapper(googleRedirect),
+  mailSender: controllerWrapper(mailSender),
 };

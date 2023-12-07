@@ -7,6 +7,7 @@ const {
   logOut,
   googleAuth,
   googleRedirect,
+  mailSender,
 } = require("../controllers/auth");
 const { validateBody, isAuthenticate } = require("../middlewares/index.js");
 const { schemas } = require("../models/user.js");
@@ -17,5 +18,7 @@ router.post("/logout", isAuthenticate, logOut);
 
 router.get("/google", googleAuth);
 router.get("/google-redirect", googleRedirect);
+
+router.post("/forgot-password", validateBody(schemas.updateEmail), mailSender);
 
 module.exports = router;
