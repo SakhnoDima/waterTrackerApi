@@ -10,6 +10,8 @@ const getWaterUsePercent = require("./getWaterUsePercent");
 const getDateInfo = require("./getDateInfo");
 const numDays = require("./getAllDaysOfMonth");
 const getMonthList = require("./getMonthList");
+const mailSenderTransport = require("./mailSender");
+const passwordGenerator = require("./passwordGenerator");
 
 module.exports = {
   handleMongooseError,
@@ -26,4 +28,6 @@ module.exports = {
   getDateInfo,
   numDays,
   getMonthList,
+  mailSenderTransport,
+  passwordGenerator,
 };

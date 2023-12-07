@@ -98,6 +98,42 @@
         }
       }
     },
+    "/auth/forgot-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Sending an email to a user with a new password",
+        "parameters": [],
+        "requestBody": {
+          "description": "User email",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewPassResponse"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New password sent successfully!",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "404": {
+            "description": "User with email: email not found",
+            "content": {}
+          },
+          "500": {
+            "description": "There are problems on the server, try again later.",
+            "content": {}
+          }
+        }
+      }
+    },
     "/auth/logout": {
       "post": {
         "tags": ["Auth"],
@@ -538,6 +574,19 @@
           "email": "stich@gmail.com",
           "avatar": "http://res.cloudinary.com/...",
           "token": "daf7f8a7fy8a7sfda7sydf"
+        }
+      },
+      "NewPassResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          }
+        },
+        "example": {
+          "email": "stich@gmail.com"
         }
       },
       "CurrentResponse": {

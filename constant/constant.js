@@ -16,6 +16,13 @@ const pictureFormat = ["jpg", "jpeg", "ico", "png", "svg", "webp"];
 
 const LIFETIME = 1000 * 60 * 60 * 24;
 
+const passOption = {
+  length: 8,
+  numbers: true,
+  symbols: false,
+  lowercase: false,
+  uppercase: false,
+};
 module.exports = {
   emailRegex,
   gender,
@@ -23,4 +30,5 @@ module.exports = {
   tokenExpires,
   pictureFormat,
   LIFETIME,
+  passOption,
 };
