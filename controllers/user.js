@@ -46,7 +46,7 @@ const userUpdate = async (req, res) => {
       subject: "New email",
       text: "Updated email",
       html: `<div><h1>Water Tracker</h1>
-    <a href="http://localhost:5050/api/user/updateUser/${newEmail}/${_id}">Updated email : ${newEmail}</a>
+    <a href="https://water-tracker-f07j.onrender.com/api/user/updateUser/${newEmail}/${_id}">Updated email : ${newEmail}</a>
     </div>`,
     };
 
