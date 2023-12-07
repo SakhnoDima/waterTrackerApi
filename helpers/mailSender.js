@@ -17,6 +17,7 @@ const mailSenderTransport = async (data) => {
   };
 
   await transport.sendMail(email).catch((error) => {
+    console.log(error);
     throw HttpError(500, `There are problems on the server, try again later.`);
   });
 };
