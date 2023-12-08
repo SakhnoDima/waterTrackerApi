@@ -29,10 +29,6 @@ router.patch(
   updateWater
 );
 router.get("/today", getWaterToday);
-router.post(
-  "/month/info",
-  validateBody(schemas.getWaterInfoMonthJoiSchema),
-  getWaterPerMonth
-);
+router.get("/month/info", getWaterPerMonth);
 
 module.exports = router;

@@ -59,9 +59,7 @@ const updateWater = async (req, res) => {
       new: true,
     }
   );
-  // console.log(_id.toString());
-  // console.log(result.owner.toString());
-  //  console.log(result.owner.toString() === _id.toString());
+
   if (!result) {
     throw HttpError(404, `Don't have data with such id : ${waterId}!`);
   }
@@ -124,9 +122,9 @@ const getWaterToday = async (req, res) => {
 
 //? ===  Get monthly info  ===
 const getWaterPerMonth = async (req, res) => {
+  const { date } = req.query;
   const { _id: owner } = req.user;
   const { dailyNorma } = await User.findById(owner);
-  const { date } = req.body;
 
   const rez = await getMonthList(date, dailyNorma, owner);
 
