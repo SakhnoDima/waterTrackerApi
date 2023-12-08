@@ -82,6 +82,7 @@ const removeWaterInfo = async (req, res) => {
   }
   res.status(200).json({
     message: "Information about water has been successfully deleted!",
+    removedId: waterId,
   });
 };
 
