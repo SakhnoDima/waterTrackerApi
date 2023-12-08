@@ -252,41 +252,6 @@
         }
       }
     },
-    "/user/updateUser/{email}/{id}": {
-      "get": {
-        "tags": ["User"],
-        "summary": "Verify user email",
-        "parameters": [
-          {
-            "name": "email",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "required": false,
-          "content": {}
-        },
-        "responses": {
-          "201": {
-            "description": "Should redirect to front on home page",
-            "content": {}
-          }
-        }
-      }
-    },
     "/user/updateAvatar": {
       "patch": {
         "tags": ["User"],
@@ -529,22 +494,21 @@
       }
     },
     "/water/month/info": {
-      "post": {
+      "get": {
         "tags": ["Water"],
         "summary": "Get a list of daily water data for a given month.",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "Date",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/WaterDateRequest"
-              }
+        "parameters": [
+          {
+            "name": "date",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
+        "security": [{ "Bearer": [] }],
+
         "responses": {
           "200": {
             "description": "",
