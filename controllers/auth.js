@@ -110,9 +110,7 @@ const googleRedirect = async (req, res) => {
 
   const token = await userCreator(data);
 
-  return res.redirect(
-    `${process.env.FRONTEND_URL}/water-tracker/?token=${token}`
-  );
+  return res.redirect(`${process.env.FRONTEND_URL}/google?token=${token}`);
 };
 
 //? == Forgot password / mailSender ===

@@ -9,12 +9,20 @@ const getMonthList = async (date, norma, owner) => {
   // Get date info
   const { month, year } = getDateInfo(date);
 
-  if (!month || !year) {
+  const newMonth = month + 1;
+
+  const currentYear = new Date().getFullYear();
+
+  if (
+    !newMonth ||
+    !year ||
+    !(currentYear - 3 < year && year < currentYear + 3)
+  ) {
     throw HttpError(404, `Date is note correct`);
   }
 
   // Get the number of days in a month
-  const daysInMonth = numDays(year, month);
+  const daysInMonth = numDays(year, newMonth);
 
   for (let index = 1; index <= daysInMonth; index++) {
     const monthlyWaterList = await Water.find(
