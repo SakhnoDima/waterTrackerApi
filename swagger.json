@@ -399,7 +399,13 @@
         "responses": {
           "200": {
             "description": "Information about water has been successfully deleted!",
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaterRemoveResponse"
+                }
+              }
+            }
           },
           "404": {
             "description": "`WaterId is not valid id` or `This water feature does not belong to the current user!` or `Don't have data with such id : waterId`",
@@ -725,6 +731,19 @@
         },
         "example": {
           "dailyNorma": "4000"
+        }
+      },
+      "WaterRemoveResponse": {
+        "type": "object",
+        "properties": {
+          "removedId": {
+            "type": "number",
+            "description": "User daily normal water rate",
+            "example": "6573320cdd05fce19be2f9f6"
+          }
+        },
+        "example": {
+          "removedId": "6573320cdd05fce19be2f9f6"
         }
       },
       "WaterRateDataRequest": {
