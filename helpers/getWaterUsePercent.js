@@ -1,5 +1,5 @@
 const getWaterUsePercent = (totalUse, norma) => {
-  return (totalUse * 100) / norma;
+  return (totalUse * 100) / norma || null;
 };
 
 module.exports = getWaterUsePercent;

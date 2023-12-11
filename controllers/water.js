@@ -91,10 +91,6 @@ const getWaterToday = async (req, res) => {
   const { _id: owner } = req.user;
   const { dailyNorma } = await User.findById(owner);
 
-  //! if (!dailyNorma) {
-  //!   throw HttpError(404, `Please add your daily water rate`);
-  //! }
-
   // Getting full details from user data (time)
   const { day, month, year } = getDateInfo(Date.now());
 
@@ -129,7 +125,7 @@ const getWaterPerMonth = async (req, res) => {
 
   const rez = await getMonthList(date, dailyNorma, owner);
 
-  res.status(201).json([...rez]);
+  res.status(201).json(rez);
 };
 
 module.exports = {
