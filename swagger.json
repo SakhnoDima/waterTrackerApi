@@ -47,7 +47,13 @@
         "responses": {
           "201": {
             "description": "Register is successfully!",
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad request (invalid request body)",
@@ -560,8 +566,9 @@
           }
         }
       },
-      "LogInResponse": {
+      "RegistrationResponse": {
         "type": "object",
+        "required": ["email", "password"],
         "properties": {
           "email": {
             "type": "string",
@@ -580,9 +587,40 @@
           }
         },
         "example": {
-          "email": "stich@gmail.com",
+          "email": "user@example.com",
           "avatar": "http://res.cloudinary.com/...",
           "token": "daf7f8a7fy8a7sfda7sydf"
+        }
+      },
+      "LogInResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "User avatar link",
+            "example": "http://res.cloudinary.com/..."
+          },
+          "token": {
+            "type": "string",
+            "description": "User token",
+            "example": "daf7f8a7fy8a7sfda7sydf"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "example": "Stich"
+          }
+        },
+        "example": {
+          "email": "user@example.com",
+          "avatar": "http://res.cloudinary.com/...",
+          "token": "daf7f8a7fy8a7sfda7sydf",
+          "name": "Stich"
         }
       },
       "NewPassResponse": {
