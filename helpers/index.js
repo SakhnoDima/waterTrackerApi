@@ -5,13 +5,14 @@ const { tokenCreator, isValidToken } = require("./tokenWorkPlace");
 const setAvatar = require("./useAvatar");
 const { stringifiedParams, getUserFromGoogle } = require("./googleAuth");
 const userCreator = require("./addedUser");
-const totalWaterPerToday = require("./totalWaterPerToday");
+const monthInfoWaterList = require("./getWaterListInfo");
 const getWaterUsePercent = require("./getWaterUsePercent");
 const getDateInfo = require("./getDateInfo");
 const numDays = require("./getAllDaysOfMonth");
 const getMonthList = require("./getMonthList");
 const mailSenderTransport = require("./mailSender");
 const passwordGenerator = require("./passwordGenerator");
+const totalWaterPerToday = require("./totalWaterPerToday");
 
 module.exports = {
   handleMongooseError,
@@ -23,11 +24,12 @@ module.exports = {
   stringifiedParams,
   getUserFromGoogle,
   userCreator,
-  totalWaterPerToday,
+  monthInfoWaterList,
   getWaterUsePercent,
   getDateInfo,
   numDays,
   getMonthList,
   mailSenderTransport,
   passwordGenerator,
+  totalWaterPerToday,
 };

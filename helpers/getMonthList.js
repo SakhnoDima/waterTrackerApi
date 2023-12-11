@@ -1,57 +1,71 @@
-const { Water } = require("../models/water");
 const numDays = require("./getAllDaysOfMonth");
 const getDateInfo = require("./getDateInfo");
+const monthInfoWaterList = require("./getWaterListInfo");
 const getWaterUsePercent = require("./getWaterUsePercent");
 const HttpError = require("./httpErrors");
 
 const getMonthList = async (date, norma, owner) => {
-  const result = [];
-  // Get date info
+  const list = [];
+
   const { month, year } = getDateInfo(date);
-
-  const newMonth = month + 1;
-
   const currentYear = new Date().getFullYear();
 
-  if (
-    !newMonth ||
-    !year ||
-    !(currentYear - 3 < year && year < currentYear + 3)
-  ) {
+  if (!month || !year || !(currentYear - 3 < year && year < currentYear + 3)) {
     throw HttpError(404, `Date is note correct`);
   }
 
+  // get Water info
+  const listResult = await monthInfoWaterList(owner, month, norma);
+
+  // const monthInfoWaterList = await Water.aggregate([
+  //   { $match: { owner: owner, month: month } },
+  //   {
+  //     $group: {
+  //       _id: {
+  //         day: "$day",
+  //       },
+  //       total: { $sum: "$amount" },
+  //       count: { $count: {} },
+  //     },
+  //   },
+  //   {
+  //     $addFields: {
+  //       dailyNorma: norma,
+  //       month: month,
+  //       day: "$_id.day",
+  //     },
+  //   },
+  //   {
+  //     $project: {
+  //       _id: 0,
+  //     },
+  //   },
+  // ]);
+
   // Get the number of days in a month
-  const daysInMonth = numDays(year, newMonth);
+  const daysInMonth = numDays(year, month);
 
   for (let index = 1; index <= daysInMonth; index++) {
-    const monthlyWaterList = await Water.find(
-      {
-        day: index,
-        owner,
-        month,
-        year,
-      },
-      "amount time"
-    ).exec();
-
-    // Get the total amount of drink water for today's date
-    const total = await totalWaterPerToday(monthlyWaterList);
+    const currentDay = listResult.filter((el) => el.day === index);
 
     // Get the percent from dailyWater
-    const percent = getWaterUsePercent(total, norma);
+    const percent = getWaterUsePercent(
+      currentDay[0]?.total,
+      currentDay[0]?.dailyNorma
+    );
 
-    result.push({
+    list.push({
       date: {
         day: index,
-        month: month + 1,
+        month,
       },
-      dailyNorma: norma,
+      dailyNorma: currentDay[0]?.dailyNorma || null,
       percent: percent,
-      quantity: monthlyWaterList.length,
+      quantity: currentDay[0]?.count || null,
     });
   }
-  return result;
+
+  return list;
 };
 
 module.exports = getMonthList;

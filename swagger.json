@@ -186,7 +186,7 @@
         }
       }
     },
-    "/user/current": {
+    "/users/current": {
       "get": {
         "tags": ["User"],
         "summary": "Get current user with all info",
@@ -211,7 +211,7 @@
         }
       }
     },
-    "/user/updateUser": {
+    "/users/updateUser": {
       "patch": {
         "tags": ["User"],
         "summary": "Changing user data",
@@ -258,7 +258,7 @@
         }
       }
     },
-    "/user/updateAvatar": {
+    "/users/updateAvatar": {
       "patch": {
         "tags": ["User"],
         "summary": "Changing user avatar",
@@ -304,7 +304,7 @@
         }
       }
     },
-    "/user/updateWaterRate": {
+    "/users/updateWaterRate": {
       "patch": {
         "tags": ["User"],
         "summary": "Changing daily water rate",
@@ -516,7 +516,9 @@
             "in": "query",
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Current month and year",
+            "example": "2023-12"
           }
         ],
         "security": [{ "Bearer": [] }],
