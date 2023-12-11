@@ -663,7 +663,7 @@
           "dailyNorma": {
             "type": "number",
             "description": "User water daily normal",
-            "example": "2"
+            "example": 2
           },
           "token": {
             "type": "string",
@@ -764,11 +764,11 @@
           "dailyNorma": {
             "type": "number",
             "description": "User daily normal water rate",
-            "example": "4000"
+            "example": 4000
           }
         },
         "example": {
-          "dailyNorma": "4000"
+          "dailyNorma": 4000
         }
       },
       "WaterRemoveResponse": {
@@ -790,7 +790,7 @@
           "amount": {
             "type": "number",
             "description": "Water amount",
-            "example": "4000"
+            "example": 4000
           },
           "time": {
             "type": "date",
@@ -799,7 +799,7 @@
           }
         },
         "example": {
-          "amount": "4000",
+          "amount": 4000,
           "time": "2023-12-05T09:17:49.355+00:00"
         }
       },
