@@ -28,11 +28,21 @@ const register = async (req, res) => {
   // hashing password
   newUser.setPass(password);
 
+  // setting token
+
+  const token = await tokenCreator({ id: newUser._id });
+
+  newUser.token = token;
+  // const userWithToken = await User.findByIdAndUpdate(user._id, { token });
+
   // saving user in base
   await newUser.save();
 
   res.status(201).json({
-    message: "Register is successfully!",
+    email: newUser.email,
+    avatar: newUser.avatar,
+    name: newUser.name,
+    token: token,
   });
 };
 
@@ -67,11 +77,10 @@ const logIn = async (req, res) => {
   req.session.isAuth = true;
 
   res.status(200).json({
-    user: {
-      email: userWithToken.email,
-      avatar: userWithToken.avatar,
-      token: token,
-    },
+    email: userWithToken.email,
+    avatar: userWithToken.avatar,
+    name: userWithToken.name,
+    token: token,
   });
 };
 
