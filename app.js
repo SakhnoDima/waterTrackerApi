@@ -41,7 +41,7 @@ app.use(
 );
 
 app.use("/api/auth", authRouter);
-app.use("/api/user", userRouter);
+app.use("/api/users", userRouter);
 app.use("/api/water", waterRouters);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
