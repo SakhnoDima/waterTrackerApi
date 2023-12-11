@@ -809,7 +809,7 @@
           "amount": {
             "type": "number",
             "description": "Water amount",
-            "example": "4000"
+            "example": 4000
           },
           "time": {
             "type": "date",
@@ -823,7 +823,7 @@
           }
         },
         "example": {
-          "amount": "4000",
+          "amount": 4000,
           "time": "2354-03-06T06:35:45.245Z",
           "_id": "656dc860f4cebbf99c5d6520"
         }
