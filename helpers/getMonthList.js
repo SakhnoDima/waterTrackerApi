@@ -59,7 +59,7 @@ const getMonthList = async (date, norma, owner) => {
         day: index,
         month,
       },
-      dailyNorma: currentDay[0]?.dailyNorma || norma,
+      dailyNorma: norma,
       percent: percent,
       quantity: currentDay[0]?.count || null,
     });
