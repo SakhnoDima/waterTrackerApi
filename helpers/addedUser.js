@@ -2,13 +2,12 @@ const { User } = require("../models/user");
 const { tokenCreator } = require("./tokenWorkPlace");
 
 const userCreator = async (data) => {
-  const { id, email, name } = data;
-  console.log(data);
+  const { id, email, name, picture } = data;
 
   const currentUser = await User.findOne({ email });
 
   if (!currentUser) {
-    const newUser = new User({ email, name });
+    const newUser = new User({ email, name, avatar: picture });
     newUser.setPass(id);
     newUser.save();
 
