@@ -24,10 +24,7 @@ const getMonthList = async (date, norma, owner) => {
     const currentDay = listResult.filter((el) => el.day === index);
 
     // Get the percent from dailyWater
-    const percent = getWaterUsePercent(
-      currentDay[0]?.total,
-      currentDay[0]?.dailyNorma
-    );
+    const percent = getWaterUsePercent(currentDay[0]?.total, norma);
 
     list.push({
       date: {
