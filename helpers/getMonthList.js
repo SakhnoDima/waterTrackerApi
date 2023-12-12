@@ -17,31 +17,6 @@ const getMonthList = async (date, norma, owner) => {
   // get Water info
   const listResult = await monthInfoWaterList(owner, month, norma);
 
-  // const monthInfoWaterList = await Water.aggregate([
-  //   { $match: { owner: owner, month: month } },
-  //   {
-  //     $group: {
-  //       _id: {
-  //         day: "$day",
-  //       },
-  //       total: { $sum: "$amount" },
-  //       count: { $count: {} },
-  //     },
-  //   },
-  //   {
-  //     $addFields: {
-  //       dailyNorma: norma,
-  //       month: month,
-  //       day: "$_id.day",
-  //     },
-  //   },
-  //   {
-  //     $project: {
-  //       _id: 0,
-  //     },
-  //   },
-  // ]);
-
   // Get the number of days in a month
   const daysInMonth = numDays(year, month);
 
