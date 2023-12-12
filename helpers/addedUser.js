@@ -3,7 +3,8 @@ const { tokenCreator } = require("./tokenWorkPlace");
 
 const userCreator = async (data) => {
   const { id, email, name } = data;
-  console.log(name);
+  console.log(data);
+
   const currentUser = await User.findOne({ email });
 
   if (!currentUser) {
