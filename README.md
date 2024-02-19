@@ -32,6 +32,7 @@ First of all, run this script to install all the project dependencies.
 
 Run this script for work developer mode
 
+Swagger Docs
 
-
+https://water-tracker-f07j.onrender.com/api/docs/
 
